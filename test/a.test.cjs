@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { nothing } = require('the-one-sdk')
+const { nothing } = require('@sdf/the-one-sdk')
 
 
 describe('cjs server', () => {
