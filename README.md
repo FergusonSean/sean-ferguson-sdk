@@ -34,13 +34,13 @@ v16.10.0
 To install:
 
 ```sh
-$ npm install --save @sdf/the-one-sdk
+$ npm install --save @seanferguson/the-one-sdk
 ```
 
 Or if you prefer using Yarn:
 
 ```sh
-$ yarn add @sdf/the-one-sdk
+$ yarn add @seanferguson/the-one-sdk
 ```
 
 ## Usage

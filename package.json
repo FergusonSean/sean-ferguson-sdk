@@ -1,5 +1,5 @@
 {
-  "name": "@sdf/the-one-sdk",
+  "name": "@seanferguson/the-one-sdk",
   "version": "0.1.0",
   "description": "An sdk for accessing LOTR data through https://the-one-api.dev/",
   "scripts": {
