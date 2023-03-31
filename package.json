@@ -8,9 +8,9 @@
     "lint:fix": "eslint --fix . 'src/**/*.[tj]s' 'test/**/*.[tj]s'",
     "watch": "npm run build -- --watch src",
     "prepublishOnly": "npm run build",
-    "test": "mocha",
-    "test:watch": "mocha --watch"
+    "test": "mocha --timeout 600000"
   },
+  "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

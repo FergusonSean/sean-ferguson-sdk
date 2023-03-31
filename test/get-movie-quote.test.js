@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const { Client } = require('@seanferguson/the-one-sdk')
+import { expect } from 'chai';
+import { Client } from '@seanferguson/the-one-sdk';
 
 const client = new Client({ token: process.env.API_TOKEN })
 
