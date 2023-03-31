@@ -1,7 +1,16 @@
 import axios from 'axios';
 import type {AxiosError} from 'axios';
 
-type Filter = Record<string, { op: OPS, value?: { toString: () => string} | [{ toString: () => string}]}>;
+type FilterEntries = Record<string, Filter>;
+
+type Filter = VerboseFilter | AliasFilter;
+
+type AliasFilter = boolean | VerboseFilter["value"];
+
+type VerboseFilter = { 
+  op: OPS, 
+  value?: { toString: () => string} | [{ toString: () => string}]
+};
 
 interface RequestParams {
   limit?: number;
@@ -11,7 +20,7 @@ interface RequestParams {
 }
 
 interface FilterableRequestParams extends RequestParams {
-  filters?: Filter;
+  filters?: FilterEntries;
 }
 
 export enum OPS {
@@ -42,7 +51,19 @@ export class Client {
     .map(([k, v]: [string,string]) => `${k}=${v}`)
     .join('&')
     if(filters) {
-      query += Object.entries(filters ).map(([field, filter]) => {
+      query += Object.entries(filters ).map(([field, rawFilter]) => {
+        let filter: VerboseFilter;
+
+        if(rawFilter === true) {
+          filter = { op: OPS.EXISTS }
+        } else if(rawFilter === false) {
+          filter = { op: OPS.NOT_EXISTS }
+        } else if((rawFilter as VerboseFilter)?.op) {
+          filter = rawFilter as VerboseFilter
+        } else {
+          filter = { op: OPS.MATCH, value: rawFilter}
+        }
+
         switch(filter.op) {
           case OPS.EXISTS:
             case OPS.NOT_EXISTS:

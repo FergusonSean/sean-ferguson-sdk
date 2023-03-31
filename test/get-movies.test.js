@@ -31,6 +31,59 @@ describe('getMovies', () => {
     })
 
   })
+
+  context('when using shorthand filters', () => {
+    it('filters the list of movies by exists match', async () => {
+      const movies = await client.getMovies({ 
+        filters: {
+          notARealField: true
+        }
+      })
+      expect(movies.map(m => m._id)).to.eql([])
+    })
+
+    it('filters the list of movies by not exists match', async () => {
+      const movies = await client.getMovies({ 
+        filters: {
+          notARealField: false
+        }
+      })
+      expect(movies.length).to.eql(8)
+    })
+
+    it('filters the list of movies by exact match', async () => {
+      const movies = await client.getMovies({ 
+        filters: {
+          runtimeInMinutes: 201
+        }
+      })
+      expect(movies.map(m => m._id)).to.eql([
+        "5cd95395de30eff6ebccde5d",
+      ])
+    })
+
+    it('filters the list of movies by include match', async () => {
+      const movies = await client.getMovies({ 
+        filters: {
+          runtimeInMinutes: [201, 178]
+        }
+      })
+      expect(movies.map(m => m._id)).to.have.members([
+        '5cd95395de30eff6ebccde5c',
+        "5cd95395de30eff6ebccde5d",
+      ])
+    })
+
+    it('filters the list of movies by regex match', async () => {
+      const movies = await client.getMovies({ 
+        filters: {
+          name: /King/
+        }
+      })
+      expect(movies.length).to.eql(1)
+    })
+  })
+
   context('when using verbose query syntax', () => {
     it('filters the list of movies by exact match', async () => {
       const movies = await client.getMovies({ 

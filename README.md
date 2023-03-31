@@ -101,6 +101,14 @@ See a below list of potential operators and the corresponding valid values
 }
 ```
 
+We also allow this shorthand for specifying a MATCH filter which is treated identically to the above:
+
+```js
+{
+  fieldYouWouldLikeToFilterOn: 'the value I was looking for'
+}
+```
+
 The MATCH operator accepts a primitive type, an array, or a RegExp as it's value. If the value is a primitive type it checks for records matching the value exactly. If the value is an array it checks for an exact match with any of the values in the array. If the value is a RegExp object it will check for objects whose values match that regular expression. 
 
 Using RegExp in a match has undefined behavior if the field being filtered on is not a string field.
@@ -116,7 +124,7 @@ Using RegExp in a match has undefined behavior if the field being filtered on is
 }
 ```
 
-The NOT\_MATCH operator is a reversed version of the match operator. See Above for details
+The NOT\_MATCH operator is a reversed version of the match operator. See Above for details. Note that no shorthand for this operator exists.
 
 ##### EXISTS
 
@@ -128,6 +136,15 @@ The NOT\_MATCH operator is a reversed version of the match operator. See Above f
 }
 ```
 
+We also allow this shorthand for specifying an EXISTS filter which is treated identically to the above:
+
+```js
+{
+  fieldYouWouldLikeToFilterOn: true
+}
+```
+
+
 the EXISTS operator checks for the existence of the field in question. It does not require a value and if one is provided it will be ignored.
 
 ##### NOT\_EXISTS
@@ -135,8 +152,16 @@ the EXISTS operator checks for the existence of the field in question. It does n
 ```js
 {
   fieldYouWouldLikeToFilterOn: {
-    op: OPS.EXISTS,
+    op: OPS.NOT_EXISTS,
   }
+}
+```
+
+We also allow this shorthand for specifying a NOT\_EXISTS filter which is treated identically to the above:
+
+```js
+{
+  fieldYouWouldLikeToFilterOn: false
 }
 ```
 
@@ -252,31 +277,10 @@ For more usage examples check out the tests :)
 
 ## Potential Future Improvements
 
-1. Add shorthand for exist filters
-```js
-{
-  fieldYouWouldLikeToFilterOn: true
-}
-```
-
-2. Add shorthand for not exist filters
-```js
-{
-  fieldYouWouldLikeToFilterOn: false
-}
-```
-
-3. Add shorthand for match filters
-```js
-{
-  fieldYouWouldLikeToFilterOn: 'theExactMatchOrArrayOrRegex you are looking for'
-}
-```
-
-4. Add simple way to insert test stub to enable easily mocking the package in tests
-5. Add typing for returned values
-5. Add typing for valid filter keys
-7. Allow configuration of retry behavior
+1. Add simple way to insert test stub to enable easily mocking the package in tests
+2. Add typing for returned values
+3. Add typing for valid filter keys
+4. Allow configuration of retry behavior
 
 
 ## Contributing
