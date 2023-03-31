@@ -55,6 +55,8 @@
         "mocha/no-mocha-arrows": "off",
         "import/prefer-default-export": "off",
         "no-await-in-loop": "off",
+        "no-shadow": "off",
+        "no-continue": "off",
         "no-unreachable-loop": "off",
         "import/extensions": "off"
       }
