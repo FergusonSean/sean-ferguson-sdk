@@ -278,9 +278,27 @@ For more usage examples check out the tests :)
 ## Potential Future Improvements
 
 1. Add simple way to insert test stub to enable easily mocking the package in tests
-2. Add typing for returned values
-3. Add typing for valid filter keys
-4. Allow configuration of retry behavior
+
+  Could be fairly easily handled in client by abstracting the creation of the client instance.
+
+```js
+//in customer code
+let client = new Client({ token: process.env.API_TOKEN })
+
+const stubClient = (stub) => {
+  client = stub
+}
+
+const getClient = () => client
+
+```
+
+Downside of this approach is callint getClient everywhere is less ergonomic than just importing a client.
+
+2. Allow configuration of retry behavior
+
+  Would we want this on a per call basis or a per client basis? Per call allows for maximum of flexibility. If a call is in my job system I might be willing to retry for a lot longer than if it's embedded in an http request handler. You could just create multiple client's for this since a client costs basically no overhead. Per client has the benefit of being able to set sane defaults and then never worry about them again. I suppose Ideally we'd want both, but more practically I'd prioritize per client handling since creating lots of clients doesn't hurt.
+
 
 
 ## Contributing
