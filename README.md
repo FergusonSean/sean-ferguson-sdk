@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/express-director.svg?style=flat)](https://www.npmjs.com/package/express-director)
+[![npm version](https://img.shields.io/npm/v/express-director.svg?style=flat)](https://www.npmjs.com/package/@seanferguson/the-one-sdk)
 
 # The One SDK
 
@@ -19,7 +19,6 @@ v16.10.0
 
 ## Table of contents
 
-  - [Express Director](#express-director)
   - [Prerequisites](#prerequisites)
   - [Table of contents](#table-of-contents)
   - [Installation](#installation)
