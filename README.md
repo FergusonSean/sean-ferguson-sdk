@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/express-director.svg?style=flat)](https://www.npmjs.com/package/@seanferguson/the-one-sdk)
+[![npm version](https://img.shields.io/npm/v/@seanferguson/the-one-sdk.svg?style=flat)](https://www.npmjs.com/package/@seanferguson/the-one-sdk)
 
 # The One SDK
 
