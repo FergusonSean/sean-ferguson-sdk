@@ -61,16 +61,18 @@ export enum OPS {
     constructor({token, baseUrl = 'https://the-one-api.dev/v2' }: {token: string, baseUrl?: string }) {
       this.token = token;
       this.baseUrl = baseUrl
-
     }
 
-    static generateQuery(params: FilterableRequestParams) {
+    static generateQuery<FilterKeyType extends (string | number | symbol)>(params: FilterableRequestParams<FilterKeyType>) {
       const {filters, ...paginationFields} = params;
       let query = Object.entries(paginationFields)
-      .map(([k, v]: [string,string]) => `${k}=${v}`)
-      .join('&')
+        .map(([k, v]: [string,string]) => `${k}=${v}`)
+        .join('&')
+
       if(filters) {
-        query += Object.entries(filters ).map(([field, rawFilter]) => {
+        query += Object.entries(filters).map(f => {
+          const [field, rawFilter] = f as [string, Filter]
+
           let filter: VerboseFilter;
 
           if(rawFilter === true) {
@@ -109,7 +111,6 @@ export enum OPS {
               }
             }
           )
-          console.log( response?.data?.docs)
           return response?.data?.docs
         } catch (e) {
           if((e as AxiosError)?.response?.status === 429) {
@@ -119,7 +120,6 @@ export enum OPS {
             continue;
           }
 
-          console.log(e.response.status)
           throw e
         } 
       }
@@ -138,7 +138,7 @@ export enum OPS {
     }
 
     async getMovies(params: FilterableRequestParams<keyof Movie> = {}): Promise<[Movie]> {
-      const query = Client.generateQuery(params)
+      const query = Client.generateQuery<keyof Movie>(params)
 
       return this.sendRequest<Movie>('/movie', query)
     }
